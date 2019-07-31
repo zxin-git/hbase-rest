@@ -1,0 +1,304 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.zxin.java.common</groupId>
+  <artifactId>hbase-rest</artifactId>
+  <version>0.0.3-SNAPSHOT</version>
+  
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.14.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    
+    <properties>
+    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+        
+        <project.jar.finalName>dps-boot</project.jar.finalName>		         
+                 
+        <docker.host>http://10.102.5.56:2375</docker.host>
+        <docker.image.prefix>reg-zxin.com</docker.image.prefix>
+        <docker.image.name>${project.artifactId}</docker.image.name>
+        <docker.image.tag>${project.version}</docker.image.tag>
+    	
+    	<spring-cloud.version>Edgware.SR6</spring-cloud.version>
+    	<swagger.version>2.9.2</swagger.version>
+    	<hbase-client.version>1.4.4</hbase-client.version>
+    </properties>
+    
+    <dependencies>
+    
+    	<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		
+   	   <dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-actuator</artifactId>
+	    </dependency>
+	    
+	    <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+     	<dependency>
+		   <groupId>org.springframework.boot</groupId>
+		   <artifactId>spring-boot-devtools</artifactId>
+		   <optional>true</optional>
+		</dependency>
+		
+	    <dependency>
+	        <groupId>org.projectlombok</groupId>
+	        <artifactId>lombok</artifactId>
+	        <scope>provided</scope>
+	    </dependency>
+	    
+	    <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-aop</artifactId>
+	    </dependency>
+    
+    	<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		    <version>3.7</version>
+		</dependency>
+		
+	    <dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+		</dependency>
+				
+	    <dependency>
+		    <groupId>com.github.danielwegener</groupId>
+		    <artifactId>logback-kafka-appender</artifactId>
+		    <version>0.1.0</version>
+		    <scope>runtime</scope>
+		</dependency>
+		
+		<!-- <dependency>
+		    <groupId>net.logstash.logback</groupId>
+		    <artifactId>logstash-logback-encoder</artifactId>
+		    <version>6.1</version>
+		</dependency> -->
+	    
+	    <!--swagger -->
+		<!-- <dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger2</artifactId>
+		    <version>${swagger.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger-ui</artifactId>
+		    <version>${swagger.version}</version>
+		</dependency> -->
+		
+    	<dependency>
+		    <groupId>org.springframework.data</groupId>
+		    <artifactId>spring-data-hadoop</artifactId>
+		    <version>2.5.0.RELEASE</version>
+		    <exclusions>
+		        <exclusion>
+				    <groupId>org.slf4j</groupId>
+				    <artifactId>slf4j-log4j12</artifactId>
+		        </exclusion>
+		        <exclusion>
+				    <groupId>log4j</groupId>
+				    <artifactId>log4j</artifactId>
+		        </exclusion>
+		        <exclusion>
+		            <groupId>javax.servlet</groupId>
+			    	<artifactId>servlet-api</artifactId>
+		        </exclusion>
+		        <exclusion>
+		        	<groupId>org.apache.avro</groupId>
+		        	<artifactId>avro</artifactId>
+		        </exclusion>
+		    </exclusions>
+		</dependency>
+    			
+ 		<dependency>
+		    <groupId>org.apache.hbase</groupId>
+		    <artifactId>hbase-client</artifactId>
+		    <version>1.4.4</version>
+<!-- 		    <version>0.98.1-cdh5.1.0</version> -->
+		    <exclusions>
+		        <exclusion>
+				    <groupId>javax.servlet</groupId>
+				    <artifactId>servlet-api</artifactId>
+		        </exclusion>
+		        <exclusion>
+		        	<groupId>junit</groupId>
+		        	<artifactId>junit</artifactId>
+		        </exclusion>
+		        <exclusion>
+		            <groupId>org.slf4j</groupId>
+				    <artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+		        <exclusion>
+		        	<groupId>log4j</groupId>
+		        	<artifactId>log4j</artifactId>
+		        </exclusion>
+		        <exclusion>
+		        	<groupId>org.mortbay.jetty</groupId>
+		        	<artifactId>jetty</artifactId>
+		        </exclusion>
+		    </exclusions>
+		</dependency>
+    
+<!-- 		<dependency>
+		    <groupId>org.springframework.cloud</groupId>
+		    <artifactId>spring-cloud-starter-zipkin</artifactId>
+		</dependency> -->
+		
+    </dependencies>
+    
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
+    
+   <build>
+ 	    <plugins>
+ 	    	<!-- 编译插件 -->
+ 	    	<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+ 	    	
+ 	    	<!-- 拷贝dependency的jar包-->
+	        <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-lib</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<!-- 默认为 ${project.build.directory}/dependency -->
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+							<includeScope>runtime</includeScope>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<!-- 拷贝resources -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/resources</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.basedir}/src/main/resources</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<!-- 打包成jar  -->
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<finalName>${project.jar.finalName}</finalName>
+					<includes>
+						<!-- 仅包含class和META-INF, 排除resources内文件 -->
+						<include>com/**</include>
+						<include>META-INF/**</include>
+					</includes>
+				</configuration>
+			</plugin>
+			
+			<!-- 打包源码插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>package-sources</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+	    </plugins>
+	    
+	    <pluginManagement>
+	    	<plugins>
+		        <!-- 制作doker镜像   mvn命令： docker:build -DpushImage -->
+		        <plugin>
+	                <groupId>com.spotify</groupId>
+	                <artifactId>docker-maven-plugin</artifactId>
+	                <version>1.0.0</version>
+	                <configuration>
+	                	<dockerHost>${docker.host}</dockerHost>
+	                    <imageName>${docker.image.prefix}/${docker.image.name}:${docker.image.tag}</imageName>
+				        <!-- 指定Dockerfile所在的路径 ,会包含拷贝该路径所有文件-->
+	                    <dockerDirectory>${project.basedir}/build</dockerDirectory>
+	                    <resources>
+	                        <resource>
+	                            <targetPath>/</targetPath>
+	                            <directory>${project.build.directory}</directory>
+	                            <includes>
+		                            <include>${project.jar.finalName}.jar</include>
+		                            <include>resources/**</include>
+		                            <include>lib/**</include>
+	                            </includes>
+	                        </resource>
+	                    </resources>
+	                </configuration>
+	                <executions>
+						<execution>
+							<id>docker-build</id>
+							<phase>install</phase>
+							<goals>
+								<goal>build</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>docker-push</id>
+							<phase>install</phase>
+							<goals>
+								<goal>push</goal>
+							</goals>
+						</execution>
+					</executions>
+	            </plugin>
+            </plugins>
+    	</pluginManagement>
+	</build>
+</project>
